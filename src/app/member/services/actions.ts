@@ -10,22 +10,22 @@ import { format } from 'date-fns'
 export const processJoin = async (params, formData: FormData) => {
   // console.log("params", params)
   // const redirectUrl = params?.get('redirectUrl') ?? '/member/login'
-  const redirectUrl = 'member/login'
+  const redirectUrl = '/member/login'
 
   const form = {},
     errors = {}
   let hasErrors = false
 
   for (let [key, value] of formData.entries()) {
-    if (key.includes("$ACTION")) continue
+    if (key.includes('$ACTION')) continue
     if (key == 'birthDt' && value && value.trim()) {
       value = format(value, 'yyyy-MM-dd')
     }
 
     if (['false', 'true'].includes(value)) {
-      value = value === 'true';
+      value = value === 'true'
     }
-    
+
     form[key] = value
   }
 
