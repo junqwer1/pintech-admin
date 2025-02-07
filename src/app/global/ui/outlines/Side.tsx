@@ -1,6 +1,8 @@
 'use client'
-import React from 'react'
+import React, { useContext } from 'react'
+import classNames from 'classnames'
 import styled from 'styled-components'
+import CommonContext from '../../contexts/CommonContext'
 import colors from '../../assets/styles/color'
 import sizes from '../../assets/styles/size'
 
@@ -18,25 +20,33 @@ const StyledMenus = styled.aside`
     height: 55px;
     line-height: 53px;
     text-align: center;
-
-    
   }
 
   a.on {
-      background: ${dark};
-      color: ${white};
+    background: ${dark};
+    color: ${white};
   }
-    
+
   a + a {
-      border-top: 2px solid ${dark};
+    border-top: 2px solid ${dark};
   }
 `
 
 const Side = () => {
-  return <StyledMenus>
-    <a href="/member">회원관리</a>
-    <a href='/board'>게시판 관리</a>
-  </StyledMenus>
+  const {
+    state: { menuCode },
+  } = useContext(CommonContext)
+
+  return (
+    <StyledMenus>
+      <a href="/member" className={classNames({ on: menuCode === 'member' })}>
+        회원관리
+      </a>
+      <a href="/board" className={classNames({ on: menuCode === 'board' })}>
+        게시판 관리
+      </a>
+    </StyledMenus>
+  )
 }
 
 export default React.memo(Side)
