@@ -8,29 +8,35 @@ const { light, dark, white } = colors
 const { big } = sizes
 
 const StyledMenus = styled.aside`
-  min-height: 700px;
+  min-height: 800px;
   background: ${light};
 
   a {
     color: ${dark};
     font-size: ${big};
     display: block;
-    height: 45px;
-    line-height: 43px;
+    height: 55px;
+    line-height: 53px;
+    text-align: center;
 
-    &.on {
+    
+  }
+
+  a.on {
       background: ${dark};
       color: ${white};
-    }
+  }
     
-    & + & {
+  a + a {
       border-top: 2px solid ${dark};
-    }
   }
 `
 
 const Side = () => {
-  return <StyledMenus>주 메뉴...</StyledMenus>
+  return <StyledMenus>
+    <a href="/member">회원관리</a>
+    <a href='/board'>게시판 관리</a>
+  </StyledMenus>
 }
 
 export default React.memo(Side)
