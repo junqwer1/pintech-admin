@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { MdRadioButtonUnchecked, MdRadioButtonChecked } from 'react-icons/md'
 import { TableCols } from '@/app/global/components/Tables'
-import { Input } from '@/app/global/components/FormComponents'
+import { Input, Textarea } from '@/app/global/components/FormComponents'
 import { BigButton, ButtonGroup } from '@/app/global/components/Buttons'
 import Messages from '@/app/global/components/Messages'
+import { SubTitle } from '@/app/global/components/StyledTitle'
 
 const StyledForm = styled.form`
   table {
+    margin-bottom: 30px;
     th {
       width: 180px;
     }
@@ -51,7 +53,28 @@ const ConfigForm = ({ form, onChange, onClick, actionState }) => {
         value={form?.locationAfterWriting ?? 'list'}
       />
       <input type="hidden" name="skin" value={form?.skin ?? 'default'} />
+      <input
+        type="hidden"
+        name="listAuthority"
+        value={form?.listAuthority ?? 'ALL'}
+      />
+      <input
+        type="hidden"
+        name="viewAuthority"
+        value={form?.viewAuthority ?? 'ALL'}
+      />
+      <input
+        type="hidden"
+        name="writeAuthority"
+        value={form?.writeAuthority ?? 'ALL'}
+      />
+      <input
+        type="hidden"
+        name="commentAuthority"
+        value={form?.commentAuthority ?? 'ALL'}
+      />
 
+      <SubTitle>기본 설정</SubTitle>
       <TableCols>
         <tbody>
           <tr>
@@ -212,10 +235,216 @@ const ConfigForm = ({ form, onChange, onClick, actionState }) => {
           </tr>
           <tr>
             <th>글보기페이지 목록</th>
-            <td></td>
+            <td>
+              <span onClick={() => onClick('listUnderView', true)}>
+                {form?.listUnderView ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                사용
+              </span>
+
+              <span onClick={() => onClick('listUnderView', false)}>
+                {form?.listUnderView ? (
+                  <MdRadioButtonUnchecked />
+                ) : (
+                  <MdRadioButtonChecked />
+                )}
+                미사용
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <th>글작성 후 이동</th>
+            <td>
+              <span onClick={() => onClick('locationAfterWriting', 'list')}>
+                {form?.locationAfterWriting === 'list' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                글 목록
+              </span>
+
+              <span onClick={() => onClick('locationAfterWriting', 'view')}>
+                {form?.locationAfterWriting === 'view' ? (
+                  <MdRadioButtonUnchecked />
+                ) : (
+                  <MdRadioButtonChecked />
+                )}
+                글 보기
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <th>게시판 스킨</th>
+            <td>
+              <span onClick={() => onClick('skin', 'default')}>
+                {form?.skin === 'default' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                기본(default)
+              </span>
+
+              <span onClick={() => onClick('skin', 'gallery')}>
+                {form?.skin === 'gallery' ? (
+                  <MdRadioButtonUnchecked />
+                ) : (
+                  <MdRadioButtonChecked />
+                )}
+                갤러리(gallery)
+              </span>
+            </td>
           </tr>
         </tbody>
       </TableCols>
+
+      <SubTitle>게시판 분류</SubTitle>
+      <TableCols>
+        <tbody>
+          <tr>
+            <th>분류</th>
+            <td>
+              <Textarea
+                name="category"
+                placeholder="분류 여러개는 엔터키를 눌러서 다음칸에 입력"
+                height={200}
+                value={form?.category ?? ''}
+                onChange={onChange}
+              ></Textarea>
+            </td>
+          </tr>
+        </tbody>
+      </TableCols>
+
+      <SubTitle>게시판 권한</SubTitle>
+      <TableCols>
+        <tbody>
+          <tr>
+            <th>글목록 접근 권한</th>
+            <td>
+              <span onClick={() => onClick('listAuthority', 'ALL')}>
+                {form?.listAuthority === 'ALL' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                비회원 + 회원 + 관리자
+              </span>
+              <span onClick={() => onClick('listAuthority', 'USER')}>
+                {form?.listAuthority === 'USER' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                회원 + 관리자
+              </span>
+              <span onClick={() => onClick('listAuthority', 'ADMIN')}>
+                {form?.listAuthority === 'ADMIN' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                관리자
+              </span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>글보기 접근 권한</th>
+            <td>
+              <span onClick={() => onClick('viewAuthority', 'ALL')}>
+                {form?.viewAuthority === 'ALL' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                비회원 + 회원 + 관리자
+              </span>
+              <span onClick={() => onClick('viewAuthority', 'USER')}>
+                {form?.viewAuthority === 'USER' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                회원 + 관리자
+              </span>
+              <span onClick={() => onClick('viewAuthority', 'ADMIN')}>
+                {form?.viewAuthority === 'ADMIN' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                관리자
+              </span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>글쓰기 권한</th>
+            <td>
+              <span onClick={() => onClick('writeAuthority', 'ALL')}>
+                {form?.writeAuthority === 'ALL' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                비회원 + 회원 + 관리자
+              </span>
+              <span onClick={() => onClick('writeAuthority', 'USER')}>
+                {form?.writeAuthority === 'USER' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                회원 + 관리자
+              </span>
+              <span onClick={() => onClick('writeAuthority', 'ADMIN')}>
+                {form?.writeAuthority === 'ADMIN' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                관리자
+              </span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>댓글 작성권한</th>
+            <td>
+              <span onClick={() => onClick('commentAuthority', 'ALL')}>
+                {form?.commentAuthority === 'ALL' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                비회원 + 회원 + 관리자
+              </span>
+              <span onClick={() => onClick('commentAuthority', 'USER')}>
+                {form?.commentAuthority === 'USER' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                회원 + 관리자
+              </span>
+              <span onClick={() => onClick('commentAuthority', 'ADMIN')}>
+                {form?.commentAuthority === 'ADMIN' ? (
+                  <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+                관리자
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </TableCols>
+
       <ButtonGroup width={450} className="button-group center">
         <BigButton type="reset" color="white" disabled={isPending}>
           다시입력
