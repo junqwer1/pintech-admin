@@ -1,5 +1,5 @@
-import { getDefaultResultOrder } from "dns"
-import React from "react"
+import React from 'react'
+
 const MainContainer = () => {
   return <h1>관리자 메인...</h1>
 }

@@ -11,9 +11,7 @@ import { revalidatePath } from 'next/cache'
  * @param formData
  */
 export const processJoin = async (params, formData: FormData) => {
-  // console.log("params", params)
   const redirectUrl = params?.redirectUrl ?? '/member/login'
-  // const redirectUrl = '/member/login'
 
   const form = {}
   let errors = {}
@@ -21,8 +19,9 @@ export const processJoin = async (params, formData: FormData) => {
 
   for (let [key, value] of formData.entries()) {
     if (key.includes('$ACTION')) continue
-    if (key == 'birthDt' && value && value.trim()) {
-      value = format(value, 'yyyy-MM-dd')
+
+    if (key === 'birthDt' && value && value.trim()) {
+      value = format(new Date(value), 'yyyy-MM-dd')
     }
 
     if (['false', 'true'].includes(value)) {
@@ -32,19 +31,17 @@ export const processJoin = async (params, formData: FormData) => {
     form[key] = value
   }
 
-  console.log('form', form)
-
   // 필수 항목 검증 S
   const requiredFields = {
     email: '이메일을 입력하세요.',
     name: '이름을 입력하세요.',
     password: '비밀번호를 입력하세요.',
-    confirmPassowrd: '비밀번호를 확인하세요.',
+    confirmPassword: '비밀번호를 확인하세요.',
     phoneNumber: '휴대폰번호를 입력하세요.',
     gender: '성별을 선택하세요.',
-    birthDt: '생년월일을 선택하세요',
+    birthDt: '생년월일을 선택하세요.',
     requiredTerms1: '이용약관에 동의 하셔야 합니다.',
-    requiredTerms2: '개인정보 처리 방침에 동의 하셔야 합니다.',
+    requiredTerms2: '개인정보 처리방침에 동의 하셔야 합니다.',
     requiredTerms3: '개인정보 수집 및 이용에 동의 하셔야 합니다.',
   }
 
@@ -58,12 +55,11 @@ export const processJoin = async (params, formData: FormData) => {
       hasErrors = true
     }
   }
-  // 필수 항목 검증 E
 
-  // 주소 항목 검증 S
+  // 주소 항목 검증
   if (
     !form.zipCode ||
-    !form.zipCode.trim() ||
+    !form.zipCode?.trim() ||
     !form.address ||
     !form.address?.trim()
   ) {
@@ -71,16 +67,12 @@ export const processJoin = async (params, formData: FormData) => {
     errors.address.push('주소를 입력하세요.')
     hasErrors = true
   }
-  // 주소 항목 검증 E
-  // 비밀번호와 비밀번호 확인 일치 여부
-  if (form?.password && form?.password !== form?.confirmPassowrd) {
-    errors.confirmPassowrd = errors.confirmPassowrd ?? []
-    errors.confirmPassowrd.push('비밀번호가 일치하지 않습니다.')
+  // 필수 항목 검증 E
+  // 비밀번호와 비밀번호 확인 일치여부
+  if (form?.password && form?.password !== form?.confirmPassword) {
+    errors.confirmPassword = errors.confirmPassword ?? []
+    errors.confirmPassword.push('비밀번호가 일치하지 않습니다.')
     hasErrors = true
-  }
-
-  if (hasErrors) {
-    return errors
   }
 
   /* 서버 요청 처리 S */
@@ -105,7 +97,11 @@ export const processJoin = async (params, formData: FormData) => {
   }
   /* 서버 요청 처리 E */
 
-  // 회원가입 완료 후 이동
+  if (hasErrors) {
+    return errors
+  }
+
+  // 회원 가입 완료 후 이동
   redirect(redirectUrl)
 }
 
@@ -132,14 +128,13 @@ export const processLogin = async (params, formData: FormData) => {
 
   if (!password || !password.trim()) {
     errors.password = errors.password ?? []
-    errors.password.push('비밀번호를 입력하세요')
+    errors.password.push('비밀번호를 입력하세요.')
     hasErrors = true
   }
 
   // 필수 항목 검증 E
 
   // 서버 요청 처리 S
-
   if (!hasErrors) {
     const apiUrl = process.env.API_URL + '/member/login'
     try {
@@ -170,7 +165,6 @@ export const processLogin = async (params, formData: FormData) => {
       console.error(err)
     }
   }
-  
   // 서버 요청 처리 E
 
   if (hasErrors) {
@@ -178,8 +172,7 @@ export const processLogin = async (params, formData: FormData) => {
   }
 
   // 캐시 비우기
-  revalidatePath("/", "layout")
-
+  revalidatePath('/', 'layout')
 
   // 로그인 성공시 이동
   redirect(redirectUrl)
@@ -187,6 +180,7 @@ export const processLogin = async (params, formData: FormData) => {
 
 /**
  * 로그인한 회원 정보를 조회
+ *
  */
 export const getUserInfo = async () => {
   const cookie = await cookies()

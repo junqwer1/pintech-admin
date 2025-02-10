@@ -5,7 +5,6 @@ import { Metadata } from 'next'
 import { getUserInfo } from './member/services/actions'
 import { UserProvider } from './global/contexts/UserContext'
 import 'react-datepicker/dist/react-datepicker.css'
-
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -19,8 +18,6 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const userInfo = await getUserInfo()
-  console.log('userInfo', userInfo)
-
   return (
     <html lang="ko">
       <body>
@@ -28,9 +25,7 @@ export default async function RootLayout({
           <UserProvider _userInfo={userInfo}>
             <Header />
             <main className="main-content">
-              <CommonProvider>
-                <section>{children}</section>
-              </CommonProvider>
+              <CommonProvider>{children}</CommonProvider>
             </main>
           </UserProvider>
         </StyledComponentsRegistry>

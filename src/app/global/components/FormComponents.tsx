@@ -1,7 +1,7 @@
 'use client'
-import  {styled, css}  from 'styled-components'
-import colors from '../assets/styles/color'
-import sizes from '../assets/styles/size' 
+import { styled, css } from 'styled-components'
+import colors from '../styles/colors'
+import sizes from '../styles/sizes'
 const { light, dark } = colors
 const { normal } = sizes
 
@@ -21,21 +21,21 @@ const commonStyle = css`
 export const Input = styled.input`
   ${commonStyle}
   height: 40px;
-  border-color: ${({color}) => (color ? colors[color] ?? light : light)};
-  ${({width}) => css`
+  border-color: ${({ color }) => (color ? colors[color] ?? light : light)};
+  ${({ width }) => css`
     width: ${width}px;
   `}
 `
-
 export const Textarea = styled.textarea`
   ${commonStyle}
   height: 150px;
   resize: none;
-  border-color: ${({color}) => (color ? colors[color] ?? light : light)};
-  ${({width}) => css`
+
+  border-color: ${({ color }) => (color ? colors[color] ?? light : light)};
+  ${({ width }) => css`
     width: ${width}px;
   `}
-  ${({height}) => css`
+  ${({ height }) => css`
     height: ${height}px;
   `}
 `

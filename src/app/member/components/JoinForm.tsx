@@ -6,15 +6,17 @@ import {
   MdCheckBoxOutlineBlank,
   MdCheckBox,
 } from 'react-icons/md'
+
 import { Input } from '@/app/global/components/FormComponents'
-import DatePicker from 'react-datepicker'
-import { SmallButtton, BigButtton } from '@/app/global/components/Buttons'
+import { SmallButton, BigButton } from '@/app/global/components/Buttons'
 import Messages from '@/app/global/components/Messages'
+import DatePicker from 'react-datepicker'
 
 const StyledForm = styled.form``
 
 const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
   const [errors, formAction, isPending] = actionState
+
   return (
     <>
       <StyledForm action={formAction} autoComplete="off">
@@ -42,9 +44,8 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
         <input
           type="hidden"
           name="optionalTerms"
-          defaultValue={form?.requiredTerms3 ?? ''}
+          defaultValue={form?.optionalTerms ?? ''}
         />
-
         <Input
           type="text"
           name="email"
@@ -64,7 +65,7 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
           onChange={onChange}
         />
         <Messages color="danger">{errors?.password}</Messages>
-        
+
         <Input
           type="password"
           name="confirmPassword"
@@ -74,16 +75,16 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
           onChange={onChange}
         />
         <Messages color="danger">{errors?.confirmPassword}</Messages>
-        
+
         <Input
-          type="name"
+          type="text"
           name="name"
           placeholder="이름"
           color="dark"
           value={form?.name ?? ''}
           onChange={onChange}
         />
-        <Messages color="dange">{errors?.name}</Messages>
+        <Messages color="danger">{errors?.name}</Messages>
 
         <div className="address-row">
           <Input
@@ -94,7 +95,7 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
             value={form?.zipCode ?? ''}
             onChange={onChange}
           />
-          <SmallButtton type="button">주소찾기</SmallButtton>
+          <SmallButton type="button">주소찾기</SmallButton>
         </div>
 
         <Input
@@ -105,7 +106,6 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
           value={form?.address ?? ''}
           onChange={onChange}
         />
-
         <Input
           type="text"
           name="addressSub"
@@ -120,9 +120,9 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
           type="text"
           name="phoneNumber"
           placeholder="휴대폰번호"
-          color="dark"
           value={form?.phoneNumber ?? ''}
           onChange={onChange}
+          color="dark"
         />
         <Messages color="danger">{errors?.phoneNumber}</Messages>
 
@@ -148,7 +148,7 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
           </div>
         </div>
         <Messages color="danger">{errors?.gender}</Messages>
-        
+
         <div className="row">
           <div className="tit">생년월일</div>
           <div>
@@ -171,7 +171,7 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
             이용약관에 동의합니다.
           </div>
           <Messages color="danger">{errors?.requiredTerms1}</Messages>
-          
+
           <div
             className="terms-row"
             onClick={() =>
@@ -182,7 +182,7 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
             개인정보 처리방침에 동의합니다.
           </div>
           <Messages color="danger">{errors?.requiredTerms2}</Messages>
-          
+
           <div
             className="terms-row"
             onClick={() =>
@@ -192,8 +192,8 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
             {form?.requiredTerms3 ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
             개인정보 수집 및 이용에 동의합니다.
           </div>
-          <Messages color="danger">{errors?.requiredTerms3}</Messages>
-          
+          <Messages color="danger">{errors?.requiredTerms3} </Messages>
+
           <div
             className="terms-row"
             onClick={() =>
@@ -207,9 +207,9 @@ const JoinForm = ({ form, onClick, onChange, onSelectDate, actionState }) => {
             광고성 정보 전송에 동의합니다.(선택)
           </div>
         </div>
-        <BigButtton type="submit" className="submit-btn" disabled={isPending}>
+        <BigButton type="submit" className="submit-btn" disabled={isPending}>
           가입하기
-        </BigButtton>
+        </BigButton>
       </StyledForm>
     </>
   )

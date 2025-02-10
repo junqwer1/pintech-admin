@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Input } from '@/app/global/components/FormComponents'
-import { BigButtton } from '@/app/global/components/Buttons'
+import { BigButton } from '@/app/global/components/Buttons'
 import Messages from '@/app/global/components/Messages'
 
 const StyledForm = styled.form``
@@ -31,9 +31,9 @@ const LoginForm = ({ actionState, onChange, form }) => {
       />
       <Messages color="danger">{errors?.password}</Messages>
 
-      <BigButtton type="submit" disabled={isPending} color='primary'>
+      <BigButton type="submit" disabled={isPending} color="primary">
         로그인
-      </BigButtton>
+      </BigButton>
 
       <Messages color="danger">{errors?.global}</Messages>
     </StyledForm>

@@ -3,8 +3,8 @@ import React, { useContext } from 'react'
 import classNames from 'classnames'
 import styled from 'styled-components'
 import CommonContext from '../../contexts/CommonContext'
-import colors from '../../assets/styles/color'
-import sizes from '../../assets/styles/size'
+import colors from '../../styles/colors'
+import sizes from '../../styles/sizes'
 
 const { light, dark, white } = colors
 const { big } = sizes
@@ -42,7 +42,10 @@ const Side = () => {
       <a href="/member" className={classNames({ on: menuCode === 'member' })}>
         회원관리
       </a>
-      <a href="/board" className={classNames({ on: menuCode === 'board' })}>
+      <a
+        href="/board/config/list"
+        className={classNames({ on: menuCode === 'board' })}
+      >
         게시판 관리
       </a>
     </StyledMenus>

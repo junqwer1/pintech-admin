@@ -14,14 +14,22 @@ const JoinContainer = () => {
   }, [])
 
   const onClick = useCallback((field, value) => {
-    setForm((form) => ({...form, [field]: value}))
+    setForm((form) => ({ ...form, [field]: value }))
   }, [])
 
   const onSelectDate = useCallback((date) => {
-    setForm((form) => ({...form, birthDt: date }))
+    setForm((form) => ({ ...form, birthDt: date }))
   }, [])
 
-  return <JoinForm actionState={actionState} form={form} onChange={onChange} onClick={onClick} onSelectDate={onSelectDate}/>
+  return (
+    <JoinForm
+      actionState={actionState}
+      form={form}
+      onChange={onChange}
+      onClick={onClick}
+      onSelectDate={onSelectDate}
+    />
+  )
 }
 
 export default React.memo(JoinContainer)

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import colors from '../assets/styles/color'
-import sizes from '../assets/styles/size'
+import colors from '../styles/colors'
+import sizes from '../styles/sizes'
 
 const { info } = colors
 const { small } = sizes
@@ -15,7 +15,7 @@ const Message = styled.div`
   border-radius: 2px;
 
   & + & {
-    margin: 3px;
+    margin-top: 3px;
   }
 
   ${({ color }) =>
@@ -29,7 +29,8 @@ const Message = styled.div`
 const Messages = ({ children, color }) => {
   if (!children) return <></>
 
-  let messages = Array.isArray(children) ? children : [children] //배열만들기
+  let messages = Array.isArray(children) ? children : [children]
+
   messages = messages.filter((s) => s && ('' + s)?.trim())
   if (messages.length === 0) return <></>
 

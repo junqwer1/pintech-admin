@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useActionState, useCallback } from 'react'
+import React, { useState, useCallback, useActionState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import LoginForm from '../components/LoginForm'
 import { processLogin } from '../services/actions'
@@ -9,7 +9,6 @@ type Props = {
 }
 
 const LoginContainer = ({ redirectUrl }: Props) => {
-
   const searchParams = useSearchParams()
   const params = { redirectUrl: redirectUrl ?? searchParams.get('redirectUrl') }
   const actionState = useActionState(processLogin, params)

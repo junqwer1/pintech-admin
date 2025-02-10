@@ -3,9 +3,8 @@
 import { useContext, useLayoutEffect } from 'react'
 import { styled } from 'styled-components'
 import CommonContext from '../contexts/CommonContext'
-import sizes from '../assets/styles/size'
-import colors from '../assets/styles/color'
-
+import sizes from '../styles/sizes'
+import colors from '../styles/colors'
 const { big } = sizes
 const { dark } = colors
 
@@ -26,5 +25,5 @@ export const MainTitle = styled(_MainTitle)`
   margin: 0 0 25px;
   font-size: ${big};
   border-bottom: 2px solid ${dark};
-  color: ${dark}
+  color: ${dark};
 `
