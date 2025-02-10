@@ -25,6 +25,7 @@ const ConfigForm = ({ form, onChange, onClick, actionState }) => {
 
   return (
     <StyledForm action={formAction} autoComplete="off">
+      <input type="hidden" name="mode" value={form?.mode ?? 'add'} />
       <input type="hidden" name="open" value={form?.open ?? false} />
       <input type="hidden" name="useEditor" value={form?.useEditor ?? false} />
       <input
@@ -80,12 +81,21 @@ const ConfigForm = ({ form, onChange, onClick, actionState }) => {
           <tr>
             <th>게시판 ID</th>
             <td>
-              <Input
-                type="text"
-                name="bid"
-                value={form?.bid ?? ''}
-                onChange={onChange}
-              />
+              {form?.mode === 'edit' ? (
+                <>
+                {form?.bid}
+                <input type='hidden' name='bid' value={form?.bid} />
+                </>
+              ) : (
+                <>
+                  <Input
+                    type="text"
+                    name="bid"
+                    value={form?.bid ?? ''}
+                    onChange={onChange}
+                  />
+                </>
+              )}
               <Messages color="danger">{errors?.bid}</Messages>
             </td>
           </tr>
@@ -269,9 +279,9 @@ const ConfigForm = ({ form, onChange, onClick, actionState }) => {
 
               <span onClick={() => onClick('locationAfterWriting', 'view')}>
                 {form?.locationAfterWriting === 'view' ? (
-                  <MdRadioButtonUnchecked />
-                ) : (
                   <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
                 )}
                 글 보기
               </span>
@@ -291,9 +301,9 @@ const ConfigForm = ({ form, onChange, onClick, actionState }) => {
 
               <span onClick={() => onClick('skin', 'gallery')}>
                 {form?.skin === 'gallery' ? (
-                  <MdRadioButtonUnchecked />
-                ) : (
                   <MdRadioButtonChecked />
+                ) : (
+                  <MdRadioButtonUnchecked />
                 )}
                 갤러리(gallery)
               </span>
