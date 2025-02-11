@@ -17,7 +17,9 @@ export const processJoin = async (params, formData: FormData) => {
   let errors = {}
   let hasErrors = false
 
-  for (let [key, value] of formData.entries()) {
+  for (const v of formData.entries()) {
+    const key = v?.key
+    let value = v?.value
     if (key.includes('$ACTION')) continue
 
     if (key === 'birthDt' && value && value.trim()) {
@@ -192,5 +194,7 @@ export const getUserInfo = async () => {
       const result = await res.json()
       return result.success && result.data
     }
-  } catch (err) {}
+  } catch (err) {
+    console.error(err)
+  }
 }
